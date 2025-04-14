@@ -1,0 +1,84 @@
+<!--
+// To do list
+
+// Form for users input of tasks 
+
+// Add task button 
+
+// Delete task button on the task put out 
+
+
+// make everything task user puts out into a grid 
+
+// form will have Add task form 
+// then the date 
+// add filter task 
+
+
+
+
+//
+-->
+
+<html> 
+
+
+
+<hhead> 
+
+
+</hhead>
+
+ <body> 
+    
+
+
+    <header>
+    <h1> Todo List </h1>
+    </header>
+    <main>  
+        <form>  
+            <label for="todo"> Add your todo here: </label>
+            <input type="text" name="todo" id="todo"  placeholder="Add your todo here...">
+            <button>+</button>
+            <br><br>
+            <label for="todo"> Enter the deadline for task: </label>
+            <input type="date" name="todo" id="todo" placeholder="Enter in the format YYYY-MM-DD">
+            <button>+</button>
+            <br><br>
+        </form>
+
+        <!-- Buttons to delete selected -->
+
+    
+
+
+
+    </main>
+
+
+
+
+
+
+
+
+    <script> 
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
