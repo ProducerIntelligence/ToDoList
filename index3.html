@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Todo List</title>
+  <style>
+    h1 {
+      display: flex;
+      justify-content: center;
+      font-size: 2rem;
+      color: #2c3e50;
+    }
+
+    .makemiddle {
+        background-color: #ecf0f1; /* Light gray-blue background */
+      width: 830px; 
+      padding: 2rem;
+      border-radius:10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* subtle shadow */
+    }
+
+    body, html {
+     margin:0;
+     font-family: 'Roboto', sans-serif;
+     background-color: #f6f9fc; /* Soft off-white background */
+     color: #34495e; /* Neutral dark text */
+    }
+
+    form {
+    
+      
+    }
+
+    form input {
+        
+    }
+
+    label {
+      
+    
+    }
+
+    html {
+      
+    }
+
+ 
+
+    .wrapper {
+        background-color: #d6eaf8; /* Soft blue wrapper */
+  display: flex;
+  justify-content: center; /* horizontal centering */
+  align-items: center;     /* vertical centering */
+  height: 100vh;           /* full screen height */
+     
+}
+
+    .midsection button {
+      display: flex;
+      /* Removed invalid flex-direction */
+    }
+
+
+    .form-row {
+        display: flex;
+       flex-direction: row;
+       justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 1rem;
+    }
+
+    .twobuttons {
+        display: flex;
+       flex-direction: row;
+       justify-content: space-between;
+       align-items: center;
+        margin-bottom: 1rem;
+    }
+    .last-row {
+        display: flex;
+       flex-direction: row;
+       justify-content: space-between;
+       align-items: center;
+        margin-bottom: 1rem;
+    }
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropbtn {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 15px;
+        font-size: 0.7rem;
+        border: none;
+        border-radius: 5px;;
+        cursor: pointer;
+
+    }
+
+    /* Hidden dropdown content */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 150px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+        border-radius: 5px;
+        z-index: 1;
+    }
+    
+          /* Links in the dropdown */
+    .dropdown-content a {
+  color: #333;
+  padding: 10px 15px;
+  text-decoration: none;
+  display: block;
+    }
+
+  /* Hover effect */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Show the dropdown when hovering over dropdown */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.todo-container {
+    background-color: #f1f1f1;
+}
+
+#taskDisplay {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Style for each task element */
+.taskItem {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f1f1f1;
+  padding: 0.75rem 1rem;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+  </style>
+
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    <div class="todo-container">
+
+      
+      <h2> Your Tasks  </h2>
+        <div id="taskDisplay"> </div>
+    </div>
+
+
+    <div class="wrapper">
+  <div class="makemiddle">
+    <header>
+      <h1>Todo List</h1>
+    </header>
+
+    <main>
+      <form id="todo-Form">
+        <div class="form-row">
+        <label for="todo">Add your todo here:</label>
+        <input type="text" name="todo" id="todo" placeholder="Add your todo here...">
+        <button type="button" id="submitBtn">Add Your To Do!</button>
+
+        <label for="deadline">Enter the deadline for task:</label>
+        <input type="date" name="deadline" id="deadline" placeholder="YYYY-MM-DD">
+    </div>
+      </form>
+
+      <section class="midsection">
+        <div class="twobuttons"> 
+        <button id="deleteSelectedBtn">DELETE SELECTED</button>
+        <button id="deleteAllBtn">DELETE ALL</button>
+    </div>
+      </section>
+
+      <footer>
+        <div class="last-row"> 
+            <div class="dropdown">
+            <button class="dropbtn" id="optionsBtn">Options ⬇</button>
+            <div class="dropdown-content">
+                <a href="#" id="opt1">All</a>  
+                <a href="#" id="opt2">Pending</a>
+                <a href="#" id="opt3">Completed</a>
+                </div>
+            </div>
+        <p id="completed">Completed: 0 </p>          
+        <p id="totaltask">Total Tasks: 0 </p>
+    </div>
+      </footer>
+    </main>
+
+   
+  </div>
+</div>
+
+  <script>
+    
+
+    const toDoInput = document.getElementById('todo');
+    const deadlineInput = document.getElementById('deadline');
+    const submitBtn = document.getElementById('submitBtn');
+    const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+    const deleteAllBtn = document.getElementById('deleteAllBtn');
+    const optionsBtn = document.getElementById('optionsBtn');
+    const taskDisplay = document.getElementById('taskDisplay');
+    
+
+    deleteAllBtn.addEventListener('click', function() {
+        // delete all tasks logic
+
+        if (taskDisplay.children.length > 0) {
+            taskDisplay.innerHTML = ''; // clears all child elements
+        }
+
+
+
+
+
+    });
+
+    deleteSelectedBtn.addEventListener('click', function() {
+    // Loop through all task items
+    const tasks = taskDisplay.querySelectorAll('.taskItem'); // ✅ Fixed typo: 'tasl'kItem' ➜ 'taskItem'
+
+    tasks.forEach(taskItem => {
+        const checkBox = taskItem.querySelector('input[type="checkbox"]');
+        if (checkBox && checkBox.checked) {
+            taskItem.remove(); // Remove if checked
+        }
+    });
+});
+
+
+    optionsBtn.addEventListener('click', function() {
+        // open dropdown or filter tasks
+
+    
+
+
+    });
+
+    // addEvent li+stner for All options in Options button so that it filters and shows all the task
+// Show All Tasks
+document.querySelector('#opt1').addEventListener('click', () => {
+    const allTasks = taskDisplay.querySelectorAll('.taskItem');
+    allTasks.forEach(task => {
+        task.style.display = 'flex';
+    });
+});
+
+
+        // addEvent listner for pending options in Options button so that it filters 
+        const allTasks = document.querySelectorAll('.taskItem'); // Select all existing tasks
+
+allTasks.forEach(task => {
+    const checkBox = task.querySelector('input[type="checkbox"]');
+    if (!checkBox.checked) {
+        task.style.display = 'flex'; // Show pending
+    } else {
+        task.style.display = 'none'; // Hide completed
+    }
+});
+       
+    // Show Pending Tasks
+document.querySelector('#opt2').addEventListener('click', () => {
+    const allTasks = taskDisplay.querySelectorAll('.taskItem');
+    allTasks.forEach(task => {
+        const checkBox = task.querySelector('input[type="checkbox"]');
+        if (!checkBox.checked) {
+            task.style.display = 'flex'; // Show
+        } else {
+            task.style.display = 'none'; // Hide
+        }
+    });
+});
+
+
+
+        // addEvent listner for completed options in Options button so that it filters 
+
+
+// Show Completed Tasks
+document.querySelector('#opt3').addEventListener('click', () => {
+    const allTasks = taskDisplay.querySelectorAll('.taskItem');
+    let hasCompleted = false;
+
+    allTasks.forEach(task => {
+        const checkBox = task.querySelector('input[type="checkbox"]');
+        if (checkBox.checked) {
+            hasCompleted = true;
+        }
+    });
+
+    allTasks.forEach(task => {
+        const checkBox = task.querySelector('input[type="checkbox"]');
+        if (hasCompleted) {
+            task.style.display = checkBox.checked ? 'flex' : 'none';
+        } else {
+            task.style.display = 'flex'; // show all if no completed
+        }
+    });
+});
+
+
+    // Make the completed p increment everytime a task is completed 
+
+
+    
+    function updateCompletedCount() {
+    const allTasks = document.querySelectorAll('.taskItem');
+    let completedCount = 0;
+    
+    allTasks.forEach(task => {
+        const checkBox = task.querySelector('input[type="checkbox"]');
+        if (checkBox && checkBox.checked) {
+            completedCount += 1;
+        }
+    });
+
+    const completedElement = document.getElementById('completed');
+    completedElement.textContent = `Completed: ${completedCount}`;
+}
+
+    // Makes the total task number go up by 1 every time a task is added
+
+    function updateTotalCount() {
+    const allTasks = document.querySelectorAll('.taskItem');
+    const totalElement = document.getElementById('totaltask');
+    totalElement.textContent = `Total Tasks: ${allTasks.length}`;
+}
+
+submitBtn.addEventListener('click', function() {
+    const inputValue = toDoInput.value;
+    const deadlineValue = deadlineInput.value;
+
+    if (inputValue.trim() === '' || deadlineValue === '') {
+        alert('Please fill in both fields!');
+        return;
+    }
+
+    const taskItem = document.createElement('div');
+    taskItem.className = 'taskItem';
+
+    const taskText = document.createElement('span');
+    taskText.className = 'taskText';
+    taskText.textContent = inputValue + " | Deadline: " + deadlineValue;
+
+    const checkBox = document.createElement('input');
+    checkBox.type = 'checkbox';
+    checkBox.style.marginRight = '10px';
+    checkBox.addEventListener('change', () => {
+        updateCompletedCount(); //
+    });
+
+    taskItem.appendChild(checkBox);
+    taskItem.appendChild(taskText);
+
+    taskDisplay.appendChild(taskItem);
+
+    toDoInput.value = ''; // Clear input
+    deadlineInput.value = ''; // Clear deadline
+
+    updateTotalCount();
+    updateCompletedCount();
+});
+
+
+    
+
+  </script>
+</body>
+</html>
